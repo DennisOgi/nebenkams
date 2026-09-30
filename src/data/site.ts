@@ -47,14 +47,12 @@ import c14 from '../assets/clients/1565649636.png';
 import c15 from '../assets/clients/1565649609.png';
 import c16 from '../assets/clients/1565649573.jpg';
 import whoWeAre from '../assets/company/who-we-are-1565338589.jpg';
-import heroTransport from '../assets/carousel/hero-transport.png';
-import heroTransportM from '../assets/carousel/hero-transport-mobile.png';
-import heroShelter from '../assets/carousel/hero-shelter.png';
-import heroShelterM from '../assets/carousel/hero-shelter-mobile.png';
-import heroAgri from '../assets/carousel/hero-agriculture.png';
-import heroAgriM from '../assets/carousel/hero-agriculture-mobile.png';
 import heroTarpaulin from '../assets/carousel/tarpaulin.png';
 import heroMarqueePhoto from '../assets/carousel/marquee.png';
+import heroTruck from '../assets/Nebenkams_Real_Project_Hero_Images/enhanced/truck-side-cover.png';
+import heroShelter from '../assets/Nebenkams_Real_Project_Hero_Images/enhanced/marquee-multiple-peaks.png';
+import heroGreenhouse from '../assets/Nebenkams_Real_Project_Hero_Images/enhanced/greenhouse-mature.png';
+import heroCarCover from '../assets/Nebenkams_Real_Project_Hero_Images/enhanced/car-cover.png';
 
 export const contact = {
   hours: 'Monday to Saturday - 8am to 6pm',
@@ -114,7 +112,7 @@ export const whoWeAreImage = {
 };
 
 export interface HeroSlide {
-  id: 'material' | 'marquee' | 'transport' | 'shelter' | 'agriculture';
+  id: 'material' | 'marquee' | 'transport' | 'shelter' | 'agriculture' | 'car';
   number: string;
   selector: string;
   serviceSlug: string;
@@ -122,6 +120,8 @@ export interface HeroSlide {
   imageMobile: ImageMetadata;
   imageAlt: string;
   objectPosition: string;
+  /** Product shots on a plain ground stay fully visible. Scene photos fill the frame. */
+  fit?: 'cover' | 'contain';
 }
 
 /** Opening frame shared by the splash and the hero, so the intro lands in the carousel. */
@@ -153,31 +153,42 @@ export const heroSlides: HeroSlide[] = [
     id: 'transport',
     number: '03',
     selector: 'Transport',
-    serviceSlug: 'truck-cover-production',
-    image: heroTransport,
-    imageMobile: heroTransportM,
-    imageAlt: 'Rigid truck fitted with a blue curtain-side tarpaulin cover',
-    objectPosition: '72% 50%',
+    serviceSlug: 'nebenkams-side-truck-cover',
+    image: heroTruck,
+    imageMobile: heroTruck,
+    imageAlt: 'Blue side tarpaulin cover on a long trailer',
+    objectPosition: '62% 55%',
   },
   {
     id: 'shelter',
     number: '04',
     selector: 'Shelter',
-    serviceSlug: 'canopies-and-shades',
+    serviceSlug: 'marquee-tents-production',
     image: heroShelter,
-    imageMobile: heroShelterM,
-    imageAlt: 'Peaked marquee tent with a tarpaulin roof',
-    objectPosition: '50% 42%',
+    imageMobile: heroShelter,
+    imageAlt: 'White multi-peak marquee over rows of tables on a lawn',
+    objectPosition: '42% 48%',
   },
   {
     id: 'agriculture',
     number: '05',
     selector: 'Agriculture',
     serviceSlug: 'green-house-farm-and-fishponds',
-    image: heroAgri,
-    imageMobile: heroAgriM,
-    imageAlt: 'Circular tarpaulin fishpond tanks',
-    objectPosition: '50% 60%',
+    image: heroGreenhouse,
+    imageMobile: heroGreenhouse,
+    imageAlt: 'Crop rows inside a tunnel greenhouse',
+    objectPosition: '50% 58%',
+  },
+  {
+    id: 'car',
+    number: '06',
+    selector: 'Car cover',
+    serviceSlug: 'neben-autocraft-car-cover',
+    image: heroCarCover,
+    imageMobile: heroCarCover,
+    imageAlt: 'Grey fitted car cover',
+    objectPosition: 'center',
+    fit: 'contain',
   },
 ];
 

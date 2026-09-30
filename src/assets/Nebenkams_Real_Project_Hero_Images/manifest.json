@@ -1,0 +1,32 @@
+[
+  {
+    "name": "greenhouse-mature",
+    "source": "1565734610.BvUdTGiP_1ab1Pj.webp",
+    "enhanced_file": "enhanced/greenhouse-mature.png"
+  },
+  {
+    "name": "marquee-multiple-peaks",
+    "source": "1565734213.lMOw2gs1_1AKJeH.webp",
+    "enhanced_file": "enhanced/marquee-multiple-peaks.png"
+  },
+  {
+    "name": "car-cover",
+    "source": "1572864466._m-WmewO_Z1w9Eoq.webp",
+    "enhanced_file": "enhanced/car-cover.png"
+  },
+  {
+    "name": "truck-side-cover",
+    "source": "1680023714.Y1ss8-rC_ZJdQLo.webp",
+    "enhanced_file": "enhanced/truck-side-cover.png"
+  },
+  {
+    "name": "greenhouse-seedlings",
+    "source": "1565737909.uTcWlK.DoqjkRkK.jpeg",
+    "enhanced_file": "enhanced/greenhouse-seedlings.png"
+  },
+  {
+    "name": "marquee-lawn",
+    "source": "1565734148.CpNhX1Td.jpeg",
+    "enhanced_file": "enhanced/marquee-lawn.png"
+  }
+]

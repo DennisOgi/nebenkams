@@ -29,6 +29,7 @@ const prepared = await Promise.all(
           <figure
             class:list={['slide', { 'is-active': slide.open }]}
             data-slide
+            data-fit={slide.fit ?? 'cover'}
             data-label={`${slide.selector}: ${slide.service.name}`}
           >
             <picture>
