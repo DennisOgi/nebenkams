@@ -1,37 +1,28 @@
 ---
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import CallbackForm from '../components/CallbackForm.astro';
 import ContactList from '../components/ContactList.astro';
 import Icon from '../components/Icon.astro';
-import { company, contact, whoWeAreImage } from '../data/site';
+import Mvv from '../components/Mvv.astro';
+import { company, contact } from '../data/site';
 import ClientMarquee from '../components/ClientMarquee.astro';
 ---
 
-<Base title="About Us" description="Nebenkams Global Ltd: over 21 years assembling and exporting tarpaulin products from Amuwo Odofin, Lagos.">
-  <PageHead title="About Us" lede="We are Nebenkams" />
+<Base title="About Us" description="Beuberyl Tarpaulin Ltd: over 21 years assembling and exporting tarpaulin products from Amuwo Odofin, Lagos.">
+  <PageHead title="About Us" lede="We are Beuberyl Tarpaulin Ltd" />
 
   <section class="section">
     <div class="wrap">
-      <div class="who">
-        <figure class="who-media">
-          <Image
-            src={whoWeAreImage.src}
-            alt={whoWeAreImage.alt}
-            widths={[640, 960, 1280]}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            loading="eager"
-          />
-        </figure>
+      <div class="who who--copy">
         <div>
           <h2 class="h-section">Who we are</h2>
           <p>{company.intro}</p>
-          <div class="who-block">
-            <h3>Our Team</h3>
-            {company.team.map((p) => <p>{p}</p>)}
-            <a class="arrow-link" href="/our-team">Our Team <Icon name="arrow-right" /></a>
-          </div>
+        </div>
+        <div class="who-aside">
+          <h3>Our Team</h3>
+          {company.team.map((p) => <p>{p}</p>)}
+          <a class="arrow-link" href="/our-team">Our Team <Icon name="arrow-right" /></a>
         </div>
       </div>
       <div class="split-notes">
@@ -63,23 +54,7 @@ import ClientMarquee from '../components/ClientMarquee.astro';
     <div class="wrap">
       <p class="eyebrow">Mission, vision, values</p>
       <h2 id="mvv-title" class="h-section">What Keeps Us Going</h2>
-      <ul class="mvv">
-        <li id="mission">
-          <span class="ico" aria-hidden="true"><Icon name="target" /></span>
-          <h3>Our Mission</h3>
-          <p>{company.mission}</p>
-        </li>
-        <li id="vision">
-          <span class="ico" aria-hidden="true"><Icon name="eye" /></span>
-          <h3>Our Vision</h3>
-          <p>{company.vision}</p>
-        </li>
-        <li id="values">
-          <span class="ico" aria-hidden="true"><Icon name="shield" /></span>
-          <h3>Our Core Values</h3>
-          <p>{company.values}</p>
-        </li>
-      </ul>
+      <Mvv />
     </div>
   </section>
 

@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import { company } from '../data/site';
+
+interface Props {
+  linked?: boolean;
+}
+const { linked = false } = Astro.props;
+
+const items = [
+  { id: 'mission', kicker: 'Mission', title: 'Our Mission', body: company.mission },
+  { id: 'vision', kicker: 'Vision', title: 'Our Vision', body: company.vision },
+  {
+    id: 'values',
+    kicker: 'Values',
+    title: 'Core Values',
+    body: company.values,
+    words: company.valueWords,
+  },
+];
+---
+
+<ul class="mvv">
+  {
+    items.map((item, i) => (
+      <li id={item.id}>
+        <p class="mvv-index">
+          <span>{String(i + 1).padStart(2, '0')}</span> {item.kicker}
+        </p>
+        <h3>{item.title}</h3>
+        {item.words && (
+          <ul class="mvv-words">
+            {item.words.map((word) => (
+              <li>{word}</li>
+            ))}
+          </ul>
+        )}
+        <p>{item.body}</p>
+        {linked && (
+          <a class="arrow-link" href={`/about-us#${item.id}`}>
+            Read more <span class="sr-only">about our {item.kicker.toLowerCase()}</span>
+            <Icon name="arrow-right" />
+          </a>
+        )}
+      </li>
+    ))
+  }
+</ul>

@@ -1,12 +1,11 @@
 ---
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import DevGap from '../components/DevGap.astro';
-import { company, whoWeAreImage } from '../data/site';
+import { company } from '../data/site';
 ---
 
-<Base title="Our Team" description="The Nebenkams team, led by Managing Director Mr. Chinedum Onuzurike.">
+<Base title="Our Team" description="The Beuberyl team, led by Managing Director Mr. Chinedum Onuzurike.">
   <PageHead
     title="Our Team"
     crumbs={[{ label: 'About Us', href: '/about-us' }]}
@@ -15,23 +14,12 @@ import { company, whoWeAreImage } from '../data/site';
 
   <section class="section">
     <div class="wrap">
-      <div class="who">
-        <figure class="who-media">
-          <Image
-            src={whoWeAreImage.src}
-            alt={whoWeAreImage.alt}
-            widths={[640, 960, 1280]}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            loading="eager"
-          />
-        </figure>
-        <div class="prose">
-          <h2>Our Experts</h2>
-          {company.team.map((p) => <p>{p}</p>)}
-          <DevGap title="Individual team portraits">
-            The live site’s Our Team page does not publish names, roles or photographs of individual staff besides the Managing Director named in the company copy. A portrait grid is not shown until those records are supplied.
-          </DevGap>
-        </div>
+      <div class="prose who-prose">
+        <h2>Our Experts</h2>
+        {company.team.map((p) => <p>{p}</p>)}
+        <DevGap title="Individual team portraits">
+          The live site’s Our Team page does not publish names, roles or photographs of individual staff besides the Managing Director named in the company copy. A portrait grid is not shown until those records are supplied.
+        </DevGap>
       </div>
       <div class="cta-band">
         <div>

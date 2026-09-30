@@ -10,9 +10,9 @@ const year = new Date().getFullYear();
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a class="logo-plate" href="/" aria-label="Nebenkams home"><Logo loading="lazy" /></a>
+        <a class="logo-plate" href="/" aria-label="Beuberyl Tarpaulin Ltd home"><Logo loading="lazy" /></a>
         <p>{company.intro}</p>
-        <a class="arrow-link" href="/about-us">Read More <span class="sr-only">about Nebenkams</span><Icon name="arrow-right" /></a>
+        <a class="arrow-link" href="/about-us">Read More <span class="sr-only">about Beuberyl</span><Icon name="arrow-right" /></a>
         <ul class="socials-row" aria-label="Social accounts">
           {
             contact.socials.map((s) => (
@@ -58,7 +58,7 @@ const year = new Date().getFullYear();
 
     <div class="footer-bottom">
       <p style="margin:0">
-        © {year} Nebenkams by <a href={company.poweredBy.href} target="_blank" rel="noopener noreferrer">{company.poweredBy.name}</a>
+        © {year} {company.name} by <a href={company.poweredBy.href} target="_blank" rel="noopener noreferrer">{company.poweredBy.name}</a>
       </p>
       <a class="to-top" href="#top">Back to top <Icon name="arrow-right" /></a>
     </div>

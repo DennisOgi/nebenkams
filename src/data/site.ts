@@ -46,7 +46,6 @@ import c13 from '../assets/clients/1565649668.png';
 import c14 from '../assets/clients/1565649636.png';
 import c15 from '../assets/clients/1565649609.png';
 import c16 from '../assets/clients/1565649573.jpg';
-import whoWeAre from '../assets/company/who-we-are-1565338589.jpg';
 import heroTarpaulin from '../assets/carousel/tarpaulin.png';
 import heroMarqueePhoto from '../assets/carousel/marquee.png';
 import heroTruck from '../assets/Nebenkams_Real_Project_Hero_Images/enhanced/truck-side-cover.png';
@@ -77,6 +76,7 @@ export const contact = {
 } as const;
 
 export const company = {
+  name: 'Beuberyl Tarpaulin Ltd',
   intro:
     'We are a brand in tarpaulin business with over 21 years of experience in the industry. We are proud to be known as an industry leader in the assembling and exporting of tarpaulin product for various uses.',
   teamExcerpt:
@@ -96,6 +96,7 @@ export const company = {
   vision: 'To become the biggest manufacturer of tarpaulin in West Africa',
   values:
     'As a trusted brand, we carry out our business with deep and highly held values which guide our every business transaction. They include; Quality, Transparency, Stability, Communication and Trust.',
+  valueWords: ['Quality', 'Transparency', 'Stability', 'Communication', 'Trust'],
   poweredBy: { name: 'Essyp Technologies', href: 'https://essyp.com' },
 };
 
@@ -103,12 +104,6 @@ export const hero = {
   eyebrow: 'Custom tarpaulin solutions',
   heading: ['Made to cover.', 'Built to protect.'],
   intro: 'Covers, shelters and materials for the way you work.',
-};
-
-/** Source company image from the live site (branded logo board, not a workshop photograph). */
-export const whoWeAreImage = {
-  src: whoWeAre,
-  alt: 'Nebenkams Global Ltd logo displayed in a branded office setting',
 };
 
 export interface HeroSlide {
@@ -213,9 +208,9 @@ export const services: Service[] = [
     image: svcTruck,
     imageAlt: 'Blue curtain-side tarpaulin cover fitted to a rigid truck',
     excerpt:
-      'Nebenkams Global Ltd specializes in Production of High quality truck covers of all sizes for different ton trucks.',
+      'Beuberyl Tarpaulin Ltd specializes in Production of High quality truck covers of all sizes for different ton trucks.',
     body: [
-      'Nebenkams Global Ltd specializes in Production of High quality truck covers of all sizes for different ton trucks. We insist on 1st quality super PVC nylon for all our customers to avoid damages to goods covered. We also Produce sided covers for trucks with side cover.',
+      'Beuberyl Tarpaulin Ltd specializes in Production of High quality truck covers of all sizes for different ton trucks. We insist on 1st quality super PVC nylon for all our customers to avoid damages to goods covered. We also Produce sided covers for trucks with side cover.',
     ],
   },
   {
@@ -298,7 +293,7 @@ export const services: Service[] = [
   },
   {
     slug: 'nebenkams-side-truck-cover',
-    name: 'Nebenkams Side Truck Cover',
+    name: 'Beuberyl Side Truck Cover',
     quoteId: '19',
     image: svcSideTruck,
     imageAlt: 'Green curtain-side tarpaulin on a long trailer',
@@ -355,8 +350,8 @@ export const projects: Project[] = [
     imageAlt: 'Articulated truck with its load covered in dark tarpaulin',
     gallery: [],
     body: [
-      'Greenville LNG an Oil company with Head office at Abuja Nigeria sited a New Depot at Shagamu for Liquid gas and Fuel sales. Nebenkams Global Ltd won the Bid to Supply Tarpaulin covers for over 300 40ft container loaded with sensitive Machineries in a wooden container.',
-      'After a year Greenville imported another set of machineries in a wooden 20ft and 40ft container which Nebenkams was there to deliver same quality on time.',
+      'Greenville LNG an Oil company with Head office at Abuja Nigeria sited a New Depot at Shagamu for Liquid gas and Fuel sales. Beuberyl Tarpaulin Ltd won the Bid to Supply Tarpaulin covers for over 300 40ft container loaded with sensitive Machineries in a wooden container.',
+      'After a year Greenville imported another set of machineries in a wooden 20ft and 40ft container which Beuberyl was there to deliver same quality on time.',
     ],
   },
   {
@@ -377,8 +372,8 @@ export const projects: Project[] = [
     imageAlt: 'Sided truck fitted with a tarpaulin cover',
     gallery: [{ src: prjBhn2, alt: 'Additional Multi Pro BHN project photograph' }],
     body: [
-      'Multi Pro BHN is a haulage and Logistics company whose major specialty is in the Flour, Cement and other Perishables. They move these goods for major players in the Cement and Building material market. Worthy of note is that yours truly Nebenkams Global has been their number 1 supplier of quality tarpaulin which they have confessed to serving them well as compared with other local vendors.',
-      'Last Year, Multipro BHN imported new sets of 40ft sided Truck overs with sided over Tarpaulin made in China by the Truck Dealers, which they use especially for carrying their brewery drink products for Nigeria Brewery etc. after a period of time the tarpaulin covers got old and spoilt and their arose a need for replacement and being that the cost of importation is expensive, Nebenkams was called up to the task and as usual we produced a sample using top quality Tarpaulin after which we mass produced for Many trucks and we are still Producing for the company.',
+      'Multi Pro BHN is a haulage and Logistics company whose major specialty is in the Flour, Cement and other Perishables. They move these goods for major players in the Cement and Building material market. Worthy of note is that yours truly Beuberyl Tarpaulin Ltd has been their number 1 supplier of quality tarpaulin which they have confessed to serving them well as compared with other local vendors.',
+      'Last Year, Multipro BHN imported new sets of 40ft sided Truck overs with sided over Tarpaulin made in China by the Truck Dealers, which they use especially for carrying their brewery drink products for Nigeria Brewery etc. after a period of time the tarpaulin covers got old and spoilt and their arose a need for replacement and being that the cost of importation is expensive, Beuberyl was called up to the task and as usual we produced a sample using top quality Tarpaulin after which we mass produced for Many trucks and we are still Producing for the company.',
     ],
   },
   {
@@ -390,7 +385,7 @@ export const projects: Project[] = [
     imageAlt: 'Marquee tent with a waterproof tarpaulin body',
     gallery: [{ src: prjAufmevic2, alt: 'Additional Aufmevic marquee project photograph' }],
     body: [
-      'Sometime in 2016, Nebenkams developed a mould for production of superb quality of Marquee Tent water proof tarpaulin body. This innovation drew Aufmevic Nig Ltd to bringing all their tent jobs to us as we meet same needs that takes time to china thus saving them time, money and manpower. Since then they have completed over 30 tent jobs with us includes amendment jobs.',
+      'Sometime in 2016, Beuberyl developed a mould for production of superb quality of Marquee Tent water proof tarpaulin body. This innovation drew Aufmevic Nig Ltd to bringing all their tent jobs to us as we meet same needs that takes time to china thus saving them time, money and manpower. Since then they have completed over 30 tent jobs with us includes amendment jobs.',
     ],
   },
   {
@@ -426,7 +421,7 @@ export const projects: Project[] = [
     imageAlt: 'Distribution truck branded with a printed tarpaulin cover',
     gallery: [{ src: prjAshmina2, alt: 'Additional branded distribution truck photograph' }],
     body: [
-      'Aquadana has a big name among beverage companies in Nigeria, in this bid to increase its customer base decided to brand their distribution trucks with durable tarpaulin cover instead of a sticker body which won’t last after few weeks. Nebenkams gave this look to their trucks hereby prolonging the life span of truck while giving it an ecstatic look.',
+      'Aquadana has a big name among beverage companies in Nigeria, in this bid to increase its customer base decided to brand their distribution trucks with durable tarpaulin cover instead of a sticker body which won’t last after few weeks. Beuberyl gave this look to their trucks hereby prolonging the life span of truck while giving it an ecstatic look.',
     ],
   },
 ];
@@ -440,7 +435,7 @@ export const homeProjectSlugs = [
 
 export const blogCategories = [
   { slug: 'lifestyle', name: 'Lifestyle' },
-  { slug: 'nebenkams-news', name: 'Nebenkams News' },
+  { slug: 'nebenkams-news', name: 'Beuberyl News' },
   { slug: 'technology', name: 'Technology' },
 ] as const;
 
@@ -549,7 +544,7 @@ export const testimonials: Testimonial[] = [
     logo: tGreenville,
     logoAlt: 'Greenville LNG',
     quote:
-      'Square pegs must be used in square holes, if you need a right man for every job, search out the internet and you will find out your specification. This is how we got Nebenkams Global limited, from then till now we have good services, timely delivery, extra services without pay and quality materials. we are happy to have met with this company.',
+      'Square pegs must be used in square holes, if you need a right man for every job, search out the internet and you will find out your specification. This is how we got Beuberyl Tarpaulin Ltd, from then till now we have good services, timely delivery, extra services without pay and quality materials. we are happy to have met with this company.',
   },
   {
     name: 'Fatai',
@@ -558,7 +553,7 @@ export const testimonials: Testimonial[] = [
     logo: tTsl,
     logoAlt: 'TSL',
     quote:
-      'Nebenkams is Reliable, Delivers Timely and at an affordable Price that meets our yearly Budget in terms of tarpaulin and accessories. We got a referral from someone about this company and we tried them and since 6yrs now we have been proud business partners.',
+      'Beuberyl is Reliable, Delivers Timely and at an affordable Price that meets our yearly Budget in terms of tarpaulin and accessories. We got a referral from someone about this company and we tried them and since 6yrs now we have been proud business partners.',
   },
   {
     name: 'Aijey, Store.',
@@ -566,7 +561,7 @@ export const testimonials: Testimonial[] = [
     logo: tBhn,
     logoAlt: 'BHN',
     quote:
-      'With over 2,500 Trucks in our haulage Fleet, BHN remains the leading Haulage Company in Nigeria and as such the responsibility of handling our client’s goods well is on us, we go for the best parts and equipment’s even to Manpower to make sure we deliver quality. Nebenkams just delivers the best and quality tarpaulin products over time even improving on what we were used to which was less effective in productivity. We are proud partners with Nebenkams Global Limited.',
+      'With over 2,500 Trucks in our haulage Fleet, BHN remains the leading Haulage Company in Nigeria and as such the responsibility of handling our client’s goods well is on us, we go for the best parts and equipment’s even to Manpower to make sure we deliver quality. Beuberyl just delivers the best and quality tarpaulin products over time even improving on what we were used to which was less effective in productivity. We are proud partners with Beuberyl Tarpaulin Ltd.',
   },
   {
     name: 'Uche',
@@ -575,7 +570,7 @@ export const testimonials: Testimonial[] = [
     logo: tGolden,
     logoAlt: 'Golden Transport',
     quote:
-      'With over 7years partnership, Nebenkams Global Ltd supplying our truck covers, our goods are safely delivered against rain and vandalisation, we can go to bed and sleep knowing our chain supply and hauling business is safe.',
+      'With over 7years partnership, Beuberyl Tarpaulin Ltd supplying our truck covers, our goods are safely delivered against rain and vandalisation, we can go to bed and sleep knowing our chain supply and hauling business is safe.',
   },
 ];
 

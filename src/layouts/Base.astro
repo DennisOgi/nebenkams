@@ -10,11 +10,11 @@ interface Props {
   intro?: boolean;
 }
 const { title, description, intro = false } = Astro.props;
-const fullTitle = title === 'Home' ? 'Nebenkams Global Ltd — The Tarpaulin People' : `${title} | Nebenkams`;
+const fullTitle = title === 'Home' ? 'Beuberyl Tarpaulin Ltd' : `${title} | Beuberyl Tarpaulin Ltd`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const metaDescription =
   description ??
-  'Nebenkams Global Ltd, Amuwo Odofin, Lagos: truck covers, marquee tents, canopies and shades, greenhouse and fishpond tarpaulin, tarpaulin accessories and car covers.';
+  'Beuberyl Tarpaulin Ltd, Amuwo Odofin, Lagos: truck covers, marquee tents, canopies and shades, greenhouse and fishpond tarpaulin, tarpaulin accessories and car covers.';
 ---
 
 <!doctype html>

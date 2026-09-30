@@ -1,7 +1,7 @@
 const API_BASE = String(import.meta.env.PUBLIC_FORM_API_BASE ?? '').replace(/\/$/, '');
 
 export const NOT_CONNECTED_MESSAGE =
-  'This form is not connected to the Nebenkams server in this build, so nothing was sent. Please call (+234) 803 304 3995 or email info@nebenkams.com.';
+  'This form is not connected in this build, so nothing was sent. Please call (+234) 803 304 3995 or email info@nebenkams.com.';
 
 type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 export type Result = { ok: boolean; message: string };
