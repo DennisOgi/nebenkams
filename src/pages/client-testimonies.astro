@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import ClientMarquee from '../components/ClientMarquee.astro';
+import { testimonials, testimonialsIntro } from '../data/site';
+---
+
+<Base title="Testimonials" description="What procurement and logistics clients say about Nebenkams tarpaulin products.">
+  <PageHead title="Testimonials" crumbs={[{ label: 'About Us', href: '/about-us' }]} lede="What Our Clients Say" />
+
+  <section class="section">
+    <div class="wrap">
+      <p class="measure lede">{testimonialsIntro}</p>
+      <div class="grid grid--2 t-grid">
+        {testimonials.map((t) => <TestimonialCard t={t} />)}
+      </div>
+      <div class="client-marquee" aria-label="Client logos">
+        <ClientMarquee />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import QuoteDialog from '../components/QuoteDialog.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  intro?: boolean;
+}
+const { title, description, intro = false } = Astro.props;
+const fullTitle = title === 'Home' ? 'Nebenkams Global Ltd — The Tarpaulin People' : `${title} | Nebenkams`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const metaDescription =
+  description ??
+  'Nebenkams Global Ltd, Amuwo Odofin, Lagos: truck covers, marquee tents, canopies and shades, greenhouse and fishpond tarpaulin, tarpaulin accessories and car covers.';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="theme-color" content="#F7F5F0" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <script is:inline define:vars={{ intro }}>
+      document.documentElement.classList.add('js');
+      if (intro) {
+        try {
+          var nav = performance.getEntriesByType('navigation')[0];
+          var skip =
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            sessionStorage.getItem('nk-intro-seen') ||
+            location.hash ||
+            (nav && nav.type === 'back_forward');
+          if (!skip) {
+            document.documentElement.classList.add('nk-intro');
+            // Failsafe: never leave the intro covering the page if the intro script fails.
+            setTimeout(function () {
+              document.documentElement.classList.remove('nk-intro', 'nk-intro-settle');
+            }, 5200);
+          }
+        } catch (e) {}
+      }
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <span id="top"></span>
+    <slot name="before-header" />
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <QuoteDialog />
+    <script>
+      import { initForms } from '../scripts/forms';
+      import { initReveal } from '../scripts/reveal';
+      initForms();
+      initReveal();
+    </script>
+  </body>
+</html>

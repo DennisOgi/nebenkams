@@ -1,0 +1,84 @@
+---
+import Icon from './Icon.astro';
+import { contact } from '../data/site';
+
+interface Props {
+  includeHours?: boolean;
+  includeAddress?: boolean;
+}
+const { includeHours = false, includeAddress = true } = Astro.props;
+---
+
+{
+  includeAddress && (
+    <ul class="place-grid">
+      {contact.places.map((place) => (
+        <li class="place-card">
+          <span class="ico" aria-hidden="true"><Icon name="pin" /></span>
+          <h3>{place.label}</h3>
+          <p>{place.address}</p>
+        </li>
+      ))}
+    </ul>
+  )
+}
+<ul class="contact-list">
+  <li>
+    <span class="ico" aria-hidden="true"><Icon name="phone" /></span>
+    <div>
+      <h3>Contact tel</h3>
+      <p>
+        {contact.phones.map((p, i) => (
+          <>
+            {i > 0 && <br />}
+            <a href={p.href}>{p.label}</a>
+          </>
+        ))}
+      </p>
+    </div>
+  </li>
+  <li>
+    <span class="ico" aria-hidden="true"><Icon name="mail" /></span>
+    <div>
+      <h3>Email address</h3>
+      <p>
+        {contact.emails.map((e, i) => (
+          <>
+            {i > 0 && <br />}
+            <a href={`mailto:${e}`}>
+              {e.slice(0, e.indexOf('@') + 1)}
+              <wbr />
+              {e.slice(e.indexOf('@') + 1)}
+            </a>
+          </>
+        ))}
+      </p>
+    </div>
+  </li>
+  {
+    includeHours && (
+      <li>
+        <span class="ico" aria-hidden="true"><Icon name="clock" /></span>
+        <div>
+          <h3>Opening hours</h3>
+          <p>{contact.hours}</p>
+        </div>
+      </li>
+    )
+  }
+  <li>
+    <span class="ico" aria-hidden="true"><Icon name="target" /></span>
+    <div>
+      <h3>Social accounts</h3>
+      <ul class="socials-row" aria-label="Social accounts">
+        {contact.socials.map((s) => (
+          <li>
+            <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} (opens in a new tab)`}>
+              <Icon name={s.icon} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </li>
+</ul>

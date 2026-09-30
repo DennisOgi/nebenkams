@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import BlogSidebar from '../../components/BlogSidebar.astro';
+import LoginForm from '../../components/LoginForm.astro';
+import { categoryName, findPost, formatDate, posts } from '../../data/site';
+
+export function getStaticPaths() {
+  return posts.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = findPost(slug!);
+if (!post) return Astro.redirect('/news-publications');
+---
+
+<Base title={post.title} description={post.excerpt}>
+  <PageHead title={post.title} crumbs={[{ label: 'News', href: '/news-publications' }]} />
+
+  <section class="section">
+    <div class="wrap two-col">
+      <article class="article">
+        <p class="meta-row">
+          <time datetime={post.date}>{formatDate(post.date)}</time>
+          <a href={`/news-publications?category=${post.category}`}>{categoryName(post.category)}</a>
+        </p>
+        {
+          post.image && (
+            <figure class="feature-img">
+              <Image
+                src={post.image}
+                alt={post.imageAlt ?? ''}
+                widths={[800, 1200]}
+                sizes="(min-width: 1024px) 48rem, 100vw"
+                loading="eager"
+              />
+            </figure>
+          )
+        }
+        <div class="prose">
+          {
+            post.body.map((block) =>
+              typeof block === 'string' ? (
+                <p>{block}</p>
+              ) : (
+                <>
+                  <h2>{block.heading}</h2>
+                  <ul>
+                    {block.items.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </>
+              ),
+            )
+          }
+        </div>
+        <div class="comments">
+          <h2>Comments (0)</h2>
+          <p>Login to comment</p>
+          <LoginForm />
+        </div>
+      </article>
+      <BlogSidebar />
+    </div>
+  </section>
+</Base>

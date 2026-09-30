@@ -1,0 +1,14 @@
+---
+interface Props {
+  serviceId?: string;
+  heading?: string;
+}
+const { serviceId, heading = 'Contact us for more' } = Astro.props;
+---
+
+<div class="quote-cta">
+  <p>{heading}</p>
+  <button class="btn btn--primary" type="button" data-quote-open data-quote-service={serviceId}>
+    Get Quote
+  </button>
+</div>

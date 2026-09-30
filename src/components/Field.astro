@@ -1,0 +1,96 @@
+---
+interface Option {
+  value: string;
+  label: string;
+}
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'password' | 'textarea' | 'select';
+  required?: boolean;
+  autocomplete?: string;
+  placeholder?: string;
+  options?: Option[];
+  selectPrompt?: string;
+  hint?: string;
+  span2?: boolean;
+  requiredMessage?: string;
+}
+const {
+  id,
+  name,
+  label,
+  type = 'text',
+  required = false,
+  autocomplete,
+  placeholder,
+  options = [],
+  selectPrompt,
+  hint,
+  span2 = false,
+  requiredMessage,
+} = Astro.props;
+
+const errId = `${id}-error`;
+const hintId = hint ? `${id}-hint` : undefined;
+const msgRequired =
+  requiredMessage ??
+  (type === 'select' ? `Choose ${label.toLowerCase()}.` : `Enter your ${label.toLowerCase()}.`);
+---
+
+<div class:list={['field', { 'span-2': span2 }]}>
+  <label for={id}>
+    {label}
+    {required ? <span class="req">(required)</span> : <span class="req">(optional)</span>}
+  </label>
+  {hint && <p class="hint" id={hintId}>{hint}</p>}
+  {
+    type === 'textarea' ? (
+      <textarea
+        class="textarea"
+        id={id}
+        name={name}
+        required={required}
+        placeholder={placeholder}
+        autocomplete={autocomplete}
+        aria-describedby={hintId}
+        data-msg-required={msgRequired}
+        rows="5"
+      />
+    ) : type === 'select' ? (
+      <select
+        class="select"
+        id={id}
+        name={name}
+        required={required}
+        aria-describedby={hintId}
+        data-msg-required={msgRequired}
+      >
+        {selectPrompt && (
+          <option value="" disabled selected>
+            {selectPrompt}
+          </option>
+        )}
+        {options.map((o) => (
+          <option value={o.value}>{o.label}</option>
+        ))}
+      </select>
+    ) : (
+      <input
+        class="input"
+        id={id}
+        name={name}
+        type={type}
+        required={required}
+        placeholder={placeholder}
+        autocomplete={autocomplete}
+        aria-describedby={hintId}
+        inputmode={type === 'tel' ? 'tel' : undefined}
+        data-msg-required={msgRequired}
+        data-msg-type={type === 'email' ? 'Enter a valid email address, for example name@example.com.' : undefined}
+      />
+    )
+  }
+  <p class="field-error" id={errId} hidden></p>
+</div>

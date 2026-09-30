@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/nebenkams-logo-trimmed.png';
+interface Props {
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  id?: string;
+}
+const { class: className, loading = 'eager', id } = Astro.props;
+---
+
+<Image
+  src={logo}
+  alt="Nebenkams Global Ltd"
+  class={className}
+  id={id}
+  loading={loading}
+  decoding="async"
+  format="png"
+/>

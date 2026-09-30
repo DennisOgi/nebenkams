@@ -1,0 +1,110 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import CallbackForm from '../components/CallbackForm.astro';
+import ContactList from '../components/ContactList.astro';
+import Icon from '../components/Icon.astro';
+import { company, contact, whoWeAreImage } from '../data/site';
+import ClientMarquee from '../components/ClientMarquee.astro';
+---
+
+<Base title="About Us" description="Nebenkams Global Ltd: over 21 years assembling and exporting tarpaulin products from Amuwo Odofin, Lagos.">
+  <PageHead title="About Us" lede="We are Nebenkams" />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="who">
+        <figure class="who-media">
+          <Image
+            src={whoWeAreImage.src}
+            alt={whoWeAreImage.alt}
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            loading="eager"
+          />
+        </figure>
+        <div>
+          <h2 class="h-section">Who we are</h2>
+          <p>{company.intro}</p>
+          <div class="who-block">
+            <h3>Our Team</h3>
+            {company.team.map((p) => <p>{p}</p>)}
+            <a class="arrow-link" href="/our-team">Our Team <Icon name="arrow-right" /></a>
+          </div>
+        </div>
+      </div>
+      <div class="split-notes">
+        <div>
+          <h2>Our Products</h2>
+          {company.products.map((p) => <p>{p}</p>)}
+        </div>
+        <div>
+          <h2>Our Facility</h2>
+          <p>{company.facility}</p>
+          <p>Follow us:</p>
+          <ul class="socials-row" aria-label="Social accounts">
+            {
+              contact.socials.map((s) => (
+                <li>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} (opens in a new tab)`}>
+                    <Icon name={s.icon} />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="mvv-title">
+    <div class="wrap">
+      <p class="eyebrow">Mission, vision, values</p>
+      <h2 id="mvv-title" class="h-section">What Keeps Us Going</h2>
+      <ul class="mvv">
+        <li id="mission">
+          <span class="ico" aria-hidden="true"><Icon name="target" /></span>
+          <h3>Our Mission</h3>
+          <p>{company.mission}</p>
+        </li>
+        <li id="vision">
+          <span class="ico" aria-hidden="true"><Icon name="eye" /></span>
+          <h3>Our Vision</h3>
+          <p>{company.vision}</p>
+        </li>
+        <li id="values">
+          <span class="ico" aria-hidden="true"><Icon name="shield" /></span>
+          <h3>Our Core Values</h3>
+          <p>{company.values}</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="clients-title">
+    <div class="wrap">
+      <p class="eyebrow">Clients</p>
+      <h2 id="clients-title" class="h-section">Few of Our Clients</h2>
+      <div class="client-marquee" aria-label="Client logos">
+        <ClientMarquee />
+      </div>
+    </div>
+  </section>
+
+  <section class="section callback on-dark" aria-labelledby="help-title" data-reveal>
+    <div class="wrap contact-board">
+      <div class="contact-intro">
+        <p class="eyebrow">Support</p>
+        <h2 id="help-title" class="h-section">How can we help</h2>
+        <p class="contact-person">{contact.person.name} <span>{contact.person.role}</span></p>
+      </div>
+      <ContactList includeHours includeAddress />
+      <div class="form-surface">
+        <h3>Send a message</h3>
+        <CallbackForm id="about-callback" />
+      </div>
+    </div>
+  </section>
+</Base>

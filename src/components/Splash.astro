@@ -1,0 +1,29 @@
+---
+import type { GetImageResult } from 'astro:assets';
+import Logo from './Logo.astro';
+
+interface Props {
+  image: GetImageResult;
+  alt: string;
+  objectPosition?: string;
+}
+const { image, alt, objectPosition = 'center' } = Astro.props;
+---
+
+<div class="splash" id="splash" role="dialog" aria-label="Introduction">
+  <div class="splash-bg"></div>
+  <div class="splash-window">
+    <img
+      src={image.src}
+      alt={alt}
+      width={image.attributes.width}
+      height={image.attributes.height}
+      style={`--pos: ${objectPosition}`}
+    />
+  </div>
+  <div class="splash-mark">
+    <Logo id="splash-logo" class="splash-logo-img" />
+    <span class="splash-rule" aria-hidden="true"></span>
+  </div>
+  <button class="btn btn--outline splash-skip" type="button" data-intro-skip>Skip intro</button>
+</div>

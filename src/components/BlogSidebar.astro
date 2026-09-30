@@ -1,0 +1,71 @@
+---
+import Icon from './Icon.astro';
+import { blogCategories, featuredPostSlugs, findPost, formatDate, postHref, serviceHref, services } from '../data/site';
+
+interface Props {
+  q?: string;
+  category?: string;
+}
+const { q = '', category } = Astro.props;
+const featured = featuredPostSlugs.map(findPost).filter((p): p is NonNullable<typeof p> => !!p);
+---
+
+<aside class="blog-aside">
+  <form class="search-form" method="get" action="/news-publications" role="search">
+    <label class="sr-only" for="blog-q">Search blog</label>
+    <input class="input" id="blog-q" name="q" type="search" value={q} placeholder="Search blog..." />
+    {category && <input type="hidden" name="category" value={category} />}
+    <button class="btn btn--blue" type="submit" aria-label="Search">
+      <Icon name="search" />
+    </button>
+  </form>
+
+  <div class="aside-block" style="margin-top:20px">
+    <h2>Categories</h2>
+    <ul class="chip-row">
+      <li>
+        <a class="chip" href="/news-publications" aria-current={!category ? 'page' : undefined}>All</a>
+      </li>
+      {
+        blogCategories.map((c) => (
+          <li>
+            <a class="chip" href={`/news-publications?category=${c.slug}`} aria-current={category === c.slug ? 'page' : undefined}>
+              {c.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="aside-block">
+    <h2>Featured news</h2>
+    <ul class="feat-list">
+      {
+        featured.map((p) => (
+          <li>
+            <a href={postHref(p)}>
+              {p.title}
+              <time datetime={p.date}>{formatDate(p.date)}</time>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="aside-block">
+    <h2>Our services</h2>
+    <ul class="aside-links">
+      {
+        [...services].reverse().map((s) => (
+          <li>
+            <a href={serviceHref(s)}>
+              {s.name} <Icon name="arrow-right" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</aside>

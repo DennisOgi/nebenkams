@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import QuoteCta from '../../components/QuoteCta.astro';
+import CallbackForm from '../../components/CallbackForm.astro';
+import Icon from '../../components/Icon.astro';
+import { contact, findService, serviceHref, services, whyTrustUs } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = findService(slug!);
+if (!service) return Astro.redirect('/our-services');
+---
+
+<Base title={service.name} description={service.excerpt}>
+  <PageHead
+    title={service.name}
+    crumbs={[{ label: 'Services', href: '/our-services' }]}
+  />
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <figure class="feature-img">
+          <Image
+            src={service.image}
+            alt={service.imageAlt}
+            widths={[800, 1200, 1600]}
+            sizes="(min-width: 1024px) 66vw, 100vw"
+            loading="eager"
+          />
+        </figure>
+        <div class="prose">
+          {service.body.map((p) => <p>{p}</p>)}
+          {
+            service.extra?.map((block) => (
+              <>
+                <h3>{block.heading}</h3>
+                <ul>
+                  {block.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </>
+            ))
+          }
+          {service.after?.map((p) => <p>{p}</p>)}
+          <h3>Why Trust Us</h3>
+          <ul class="check-list">
+            {
+              whyTrustUs.map((item) => (
+                <li>
+                  <Icon name="check" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <QuoteCta serviceId={service.quoteId} heading="Contact us for more" />
+      </div>
+
+      <aside>
+        <details class="aside-block aside-details" open>
+          <summary>
+            Services <Icon name="chevron-down" />
+          </summary>
+          <ul class="aside-links">
+            {
+              services.map((s) => (
+                <li>
+                  <a href={serviceHref(s)} aria-current={s.slug === service.slug ? 'page' : undefined}>
+                    {s.name}
+                    <Icon name="arrow-right" />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </details>
+        <div class="aside-block">
+          <h2>Contact us for more !</h2>
+          <p>Phone: <a href={contact.phones[0].href}>{contact.phones[0].label}</a></p>
+          <p>Location: {contact.address}</p>
+          <p>Mail: <a href={`mailto:${contact.emails[0]}`}>{contact.emails[0]}</a></p>
+          <CallbackForm id={`svc-${service.slug}-form`} />
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>

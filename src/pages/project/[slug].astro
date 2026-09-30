@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import DevGap from '../../components/DevGap.astro';
+import { findProject, projects } from '../../data/site';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const project = findProject(slug!);
+if (!project) return Astro.redirect('/past-projects');
+const others = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
+---
+
+<Base title={project.title} description={project.body[0] ?? project.title}>
+  <PageHead title={project.title} crumbs={[{ label: 'Projects', href: '/past-projects' }]} />
+
+  <section class="section">
+    <div class="wrap article-layout">
+      {
+        project.client && (
+          <p class="client-badge">
+            {project.clientLogo && <Image src={project.clientLogo} alt="" height={72} loading="eager" />}
+            <span>{project.client}</span>
+          </p>
+        )
+      }
+      <figure class="feature-img">
+        <Image
+          src={project.image}
+          alt={project.imageAlt}
+          widths={[800, 1200, 1800]}
+          sizes="(min-width: 1100px) 1100px, 100vw"
+          loading="eager"
+        />
+      </figure>
+      {
+        project.gallery.length > 0 && (
+          <ul class="gallery-grid project-gallery">
+            {project.gallery.map((g) => (
+              <li>
+                <figure class="g-item">
+                  <Image src={g.src} alt={g.alt} widths={[480, 800]} sizes="(min-width: 768px) 30vw, 50vw" loading="lazy" />
+                </figure>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      <div class="prose">
+        {
+          project.body.length > 0 && (
+            <>
+              <h2>Description of the project</h2>
+              {project.body.map((p) => <p>{p}</p>)}
+            </>
+          )
+        }
+        {
+          project.missingBody && (
+            <DevGap title="Project description">
+              The live site lists this project (Lyseek Abuja Large Fishpond Project 2019) without a published body. The description is omitted until the source text is supplied.
+            </DevGap>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    others.length > 0 && (
+      <section class="section section--white" aria-labelledby="more-projects">
+        <div class="wrap">
+          <h2 id="more-projects" class="h-section">More projects</h2>
+          <ul class="grid grid--3">
+            {others.map((p) => (
+              <li>
+                <ProjectCard project={p} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</Base>

@@ -1,0 +1,12 @@
+---
+import Field from './Field.astro';
+---
+
+<form class="form-grid" data-form="login" data-endpoint="/user/login" novalidate>
+  <Field id="login-email" name="email" label="Email address" type="email" required autocomplete="username" />
+  <Field id="login-password" name="password" label="Password" type="password" required autocomplete="current-password" />
+  <div class="form-actions">
+    <button class="btn btn--primary" type="submit" data-label="Log in">Log in</button>
+  </div>
+  <div class="form-status" aria-live="polite"></div>
+</form>

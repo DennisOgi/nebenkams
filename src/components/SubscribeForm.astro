@@ -1,0 +1,12 @@
+---
+import Field from './Field.astro';
+---
+
+<form class="form-grid" data-form="newsletter" data-endpoint="/home/ajax/newsletter" novalidate id="subscribe">
+  <Field id="sub-name" name="name" label="Name" required autocomplete="name" />
+  <Field id="sub-email" name="email" label="Email address" type="email" required autocomplete="email" />
+  <div class="form-actions">
+    <button class="btn btn--primary btn--block" type="submit" data-label="Subscribe">Subscribe</button>
+  </div>
+  <div class="form-status" aria-live="polite"></div>
+</form>

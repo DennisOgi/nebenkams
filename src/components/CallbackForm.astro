@@ -1,0 +1,19 @@
+---
+import Field from './Field.astro';
+interface Props {
+  id: string;
+  submitLabel?: string;
+}
+const { id, submitLabel = 'Submit' } = Astro.props;
+---
+
+<form class="form-grid form-grid--pair" data-form="contact" data-endpoint="/home/ajax/contact" novalidate id={id}>
+  <Field id={`${id}-name`} name="name" label="Your name" required autocomplete="name" span2 />
+  <Field id={`${id}-email`} name="email" label="Email address" type="email" required autocomplete="email" />
+  <Field id={`${id}-phone`} name="phone" label="Phone number" type="tel" required autocomplete="tel" />
+  <Field id={`${id}-message`} name="message" label="Your message" type="textarea" required span2 requiredMessage="Enter your message." />
+  <div class="span-2 form-actions">
+    <button class="btn btn--primary" type="submit" data-label={submitLabel}>{submitLabel}</button>
+  </div>
+  <div class="span-2 form-status" aria-live="polite"></div>
+</form>

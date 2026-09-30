@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import PostCard from '../components/PostCard.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
+import { blogCategories, categoryName, posts } from '../data/site';
+
+const q = (Astro.url.searchParams.get('q') ?? '').trim();
+const category = Astro.url.searchParams.get('category') ?? '';
+const known = blogCategories.some((c) => c.slug === category);
+const cat = known ? category : '';
+const needle = q.toLowerCase();
+
+const filtered = posts.filter((p) => {
+  if (cat && p.category !== cat) return false;
+  if (!needle) return true;
+  const hay = `${p.title} ${p.excerpt}`.toLowerCase();
+  return hay.includes(needle);
+});
+
+const heading = cat ? categoryName(cat) : 'News Publications';
+const lede = q ? `Results for “${q}”` : undefined;
+---
+
+<Base title="News Publications" description="News and articles from Nebenkams on tarpaulin selection, care and products.">
+  <PageHead title={heading} crumbs={[{ label: 'Blog', href: '/news-publications' }]} lede={lede} />
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        {
+          filtered.length === 0 ? (
+            <div class="empty-state">
+              <h2>No matching articles</h2>
+              <p>
+                {cat && !q ? `There are no published articles in ${categoryName(cat)}.` : 'Nothing in the published articles matched that search.'}
+              </p>
+              <a class="arrow-link" href="/news-publications">View all posts</a>
+            </div>
+          ) : (
+            <ul class="post-list">
+              {filtered.map((p) => (
+                <li>
+                  <PostCard post={p} headingLevel="h2" />
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+      <BlogSidebar q={q} category={cat} />
+    </div>
+  </section>
+</Base>

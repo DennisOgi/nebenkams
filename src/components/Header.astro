@@ -1,0 +1,160 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { contact, primaryNav } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href?: string) => !!href && (href === '/' ? path === '/' : path === href);
+const isSection = (item: (typeof primaryNav)[number]) => {
+  if (isCurrent(item.href)) return true;
+  if (item.children?.some((c) => isCurrent(c.href))) return true;
+  if (item.label === 'Services' && path.startsWith('/service/')) return true;
+  if (item.label === 'Past Projects' && path.startsWith('/project/')) return true;
+  if (item.label === 'Blog' && (path.startsWith('/news/') || path.startsWith('/blog/'))) return true;
+  return false;
+};
+---
+
+<div class="utility on-dark">
+  <div class="wrap">
+    <ul>
+      <li><span class="sr-only">Opening hours: </span>Opening Hours: {contact.hours}</li>
+      <li><span class="sr-only">Address: </span>{contact.address}</li>
+    </ul>
+    <ul>
+      <li>Call us: <a href={contact.phones[0].href}>{contact.phones[0].label}</a></li>
+      <li>
+        <ul class="socials" aria-label="Social accounts">
+          {
+            contact.socials.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} (opens in a new tab)`}>
+                  <Icon name={s.icon} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<header class="site-header" id="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Nebenkams home">
+      <Logo id="header-logo" />
+    </a>
+
+    <nav class="nav-desktop" aria-label="Primary">
+      <ul>
+        {
+          primaryNav.map((item, i) => (
+            <li class:list={['nav-item', { 'is-current': isSection(item) }]} data-dropdown={item.children ? '' : undefined}>
+              {item.children && !item.href && (
+                <button class="nav-btn" type="button" aria-expanded="false" aria-controls={`dd-${i}`}>
+                  {item.label}
+                  <Icon name="chevron-down" />
+                </button>
+              )}
+              {item.href && (
+                <a class="nav-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              )}
+              {item.children && item.href && (
+                <button class="nav-btn nav-caret" type="button" aria-expanded="false" aria-controls={`dd-${i}`}>
+                  <span class="sr-only">{item.label} submenu</span>
+                  <Icon name="chevron-down" />
+                </button>
+              )}
+              {item.children && (
+                <ul class="submenu" id={`dd-${i}`}>
+                  {item.children.map((c) => (
+                    <li>
+                      <a href={c.href} aria-current={isCurrent(c.href) ? 'page' : undefined}>
+                        {c.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn btn--primary btn-quote" type="button" data-quote-open aria-label="Get Quote">
+        <span class="full" aria-hidden="true">Get Quote</span><span class="short" aria-hidden="true">Quote</span>
+      </button>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" id="menu-toggle" aria-label="Open menu">
+        <Icon name="menu" class="icon-open" />
+        <Icon name="close" class="icon-close" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-mobile" id="mobile-menu" aria-label="Primary" hidden>
+  <div class="wrap">
+    <ul>
+      {
+        primaryNav.map((item, i) => (
+          <li>
+            {item.children ? (
+              <>
+                <button class="m-toggle" type="button" aria-expanded="false" aria-controls={`m-sub-${i}`}>
+                  {item.label}
+                  <Icon name="chevron-down" />
+                </button>
+                <ul class="m-sub" id={`m-sub-${i}`} hidden>
+                  {item.href && (
+                    <li>
+                      <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                        {item.label === 'Services' ? 'All services' : item.label}
+                      </a>
+                    </li>
+                  )}
+                  {item.children.map((c) => (
+                    <li>
+                      <a href={c.href} aria-current={isCurrent(c.href) ? 'page' : undefined}>
+                        {c.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <div class="m-details">
+      <p>Opening Hours: {contact.hours}</p>
+      <p>Address: {contact.address}</p>
+      <p>Call us: <a href={contact.phones[0].href}>{contact.phones[0].label}</a></p>
+      <ul class="socials" aria-label="Social accounts" style="list-style:none">
+        {
+          contact.socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} (opens in a new tab)`}>
+                <Icon name={s.icon} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  import { initNavigation } from '../scripts/nav';
+  initNavigation();
+</script>

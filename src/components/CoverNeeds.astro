@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { heroSlides } from '../data/site';
+
+const slide = (id: (typeof heroSlides)[number]['id']) => {
+  const found = heroSlides.find((s) => s.id === id);
+  if (!found) throw new Error(`Missing hero slide ${id}`);
+  return found;
+};
+
+const needs = [
+  {
+    title: 'Transport & logistics',
+    kicker: 'Protection for the road ahead.',
+    href: '/service/truck-cover-production',
+    link: 'Explore truck covers',
+    image: slide('transport').image,
+    alt: slide('transport').imageAlt,
+  },
+  {
+    title: 'Events & outdoor spaces',
+    kicker: 'Tents and canopies built for the open air.',
+    href: '/service/marquee-tents-production',
+    link: 'Explore marquee tents',
+    image: slide('marquee').image,
+    alt: slide('marquee').imageAlt,
+  },
+  {
+    title: 'Agriculture & aquaculture',
+    kicker: 'Farm houses and fishponds in tarpaulin.',
+    href: '/service/green-house-farm-and-fishponds',
+    link: 'Explore farm covers',
+    image: slide('agriculture').image,
+    alt: slide('agriculture').imageAlt,
+  },
+  {
+    title: 'Vehicle covers & materials',
+    kicker: 'Car covers, rolls and the fittings that hold them.',
+    href: '/service/tarpaulin-accessories',
+    link: 'Explore materials',
+    image: slide('material').image,
+    alt: slide('material').imageAlt,
+  },
+];
+---
+
+<section class="section cover-need" aria-labelledby="need-title" data-reveal>
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">01 Solutions</p>
+        <h2 id="need-title" class="h-section">What do you need to cover?</h2>
+      </div>
+      <a class="arrow-link" href="/our-services">View all solutions <Icon name="arrow-right" /></a>
+    </div>
+    <div class="need-grid" data-covers>
+      <ul class="need-list">
+        {
+          needs.map((item, i) => (
+            <li>
+              <button type="button" class:list={[{ 'is-on': i === 0 }]} data-need aria-pressed={i === 0 ? 'true' : 'false'}>
+                <span>{item.title}</span>
+                <Icon name="arrow-right" />
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="need-stage">
+        {
+          needs.map((item, i) => (
+            <figure class:list={['need-figure', { 'is-on': i === 0 }]} data-need-panel>
+              <Image
+                src={item.image}
+                alt={item.alt}
+                widths={[800, 1400]}
+                sizes="(min-width: 900px) 58vw, 100vw"
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+              <figcaption>
+                <strong>{item.kicker}</strong>
+                <a class="arrow-link" href={item.href}>{item.link} <Icon name="arrow-right" /></a>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-covers]');
+  if (root) {
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-need]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-need-panel]'));
+    const show = (index: number) => {
+      buttons.forEach((button, i) => {
+        const on = i === index;
+        button.classList.toggle('is-on', on);
+        button.setAttribute('aria-pressed', String(on));
+      });
+      panels.forEach((panel, i) => panel.classList.toggle('is-on', i === index));
+    };
+    buttons.forEach((button, i) => button.addEventListener('click', () => show(i)));
+  }
+</script>

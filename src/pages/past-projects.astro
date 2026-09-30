@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/site';
+---
+
+<Base title="Past Projects" description="Selected Nebenkams tarpaulin projects for logistics, events and agriculture clients.">
+  <PageHead title="Our Projects" lede="Few of Our Past Projects" />
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Featured projects</p>
+      <ul class="grid grid--3">
+        {
+          projects.map((p) => (
+            <li>
+              <ProjectCard project={p} headingLevel="h2" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,17 @@
+---
+// Marks missing source content during development only. Production builds render nothing.
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const show = import.meta.env.DEV;
+---
+
+{
+  show && (
+    <div class="dev-gap" role="note">
+      <strong>Missing source content (development only): {title}</strong>
+      <slot />
+    </div>
+  )
+}

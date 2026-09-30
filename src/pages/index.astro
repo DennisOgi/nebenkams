@@ -1,0 +1,221 @@
+---
+import { getImage, Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Splash from '../components/Splash.astro';
+import Hero from '../components/Hero.astro';
+import CoverNeeds from '../components/CoverNeeds.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostCard from '../components/PostCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import CallbackForm from '../components/CallbackForm.astro';
+import ContactList from '../components/ContactList.astro';
+import ClientMarquee from '../components/ClientMarquee.astro';
+import Icon from '../components/Icon.astro';
+import tarpDetail from '../assets/carousel/tarpaulin.png';
+import {
+  company,
+  contact,
+  featuredPostSlugs,
+  findPost,
+  findProject,
+  heroOpenId,
+  heroSlides,
+  homeProjectSlugs,
+  testimonials,
+  whoWeAreImage,
+} from '../data/site';
+
+const splashSlide = heroSlides.find((s) => s.id === heroOpenId) ?? heroSlides[0];
+const splashImage = await getImage({ src: splashSlide.image, width: 2000, format: 'webp', quality: 76 });
+const homeProjects = homeProjectSlugs.map(findProject).filter((p): p is NonNullable<typeof p> => !!p);
+const homePosts = featuredPostSlugs.map(findPost).filter((p): p is NonNullable<typeof p> => !!p);
+---
+
+<Base title="Home" intro>
+  <Splash slot="before-header" image={splashImage} alt={splashSlide.imageAlt} objectPosition={splashSlide.objectPosition} />
+
+  <Hero />
+
+  <CoverNeeds />
+
+  <section class="craft" aria-labelledby="craft-title">
+    <figure class="craft-photo">
+      <Image
+        src={tarpDetail}
+        alt="Brass grommet set into blue tarpaulin"
+        widths={[900, 1600]}
+        sizes="(min-width: 900px) 48vw, 100vw"
+        loading="lazy"
+      />
+    </figure>
+    <div class="craft-copy">
+      <p class="eyebrow">02 Workmanship</p>
+      <h2 id="craft-title">Small details.<span>A stronger impression.</span></h2>
+      <ol class="craft-list">
+        <li>
+          <span>01</span>
+          <div>
+            <h3>Material</h3>
+            <p>Durable, weather-resistant fabrics for demanding conditions.</p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <h3>Fit</h3>
+            <p>Made to size, with the right reinforcements and fixings.</p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <h3>Finish</h3>
+            <p>Clean, consistent workmanship that performs on the job.</p>
+          </div>
+        </li>
+      </ol>
+      <button class="btn btn--quiet btn--quiet-light" type="button" data-quote-open>
+        Discuss your requirements <Icon name="arrow-right" />
+      </button>
+    </div>
+  </section>
+
+  <section class="ask">
+    <div class="wrap">
+      <h2>Tell us what you need to cover.</h2>
+      <button class="btn btn--primary" type="button" data-quote-open>
+        Request a Quote <Icon name="arrow-right" />
+      </button>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="who-title" data-reveal>
+    <div class="wrap">
+      <div class="who">
+        <figure class="who-media">
+          <Image
+            src={whoWeAreImage.src}
+            alt={whoWeAreImage.alt}
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            loading="lazy"
+          />
+        </figure>
+        <div>
+          <p class="eyebrow">Nebenkams Global Limited</p>
+          <h2 id="who-title" class="h-section">Who We Are</h2>
+          <p>{company.intro}</p>
+          <div class="who-block">
+            <h3>Our Team</h3>
+            <p>{company.teamExcerpt}</p>
+          </div>
+          <div class="who-links">
+            <a class="btn btn--primary" href="/about-us">About Us</a>
+            <a class="btn btn--outline" href="/our-team">Our Team</a>
+          </div>
+        </div>
+      </div>
+      <ul class="mvv">
+        <li>
+          <span class="ico" aria-hidden="true"><Icon name="target" /></span>
+          <h3>Our Mission</h3>
+          <p>{company.mission}</p>
+          <a class="arrow-link" href="/about-us#mission">Read more <span class="sr-only">about our mission</span><Icon name="arrow-right" /></a>
+        </li>
+        <li>
+          <span class="ico" aria-hidden="true"><Icon name="eye" /></span>
+          <h3>Our Vision</h3>
+          <p>{company.vision}</p>
+          <a class="arrow-link" href="/about-us#vision">Read more <span class="sr-only">about our vision</span><Icon name="arrow-right" /></a>
+        </li>
+        <li>
+          <span class="ico" aria-hidden="true"><Icon name="shield" /></span>
+          <h3>Core Values</h3>
+          <p>{company.values}</p>
+          <a class="arrow-link" href="/about-us#values">Read more <span class="sr-only">about our core values</span><Icon name="arrow-right" /></a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="prj-title" data-reveal>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Our Projects</p>
+          <h2 id="prj-title" class="h-section">Few of Our Past Projects</h2>
+        </div>
+        <a class="arrow-link" href="/past-projects">All projects <Icon name="arrow-right" /></a>
+      </div>
+      <div class="projects-feature">
+        {homeProjects.map((p, i) => <ProjectCard project={p} eager={i === 0} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section callback on-dark" aria-labelledby="cb-title" data-reveal>
+    <div class="wrap contact-board">
+      <div class="contact-intro">
+        <p class="eyebrow">Contact Us</p>
+        <h2 id="cb-title" class="h-section">Request a Call Back</h2>
+        <p class="callback-lead">Call or email us, or send a message and we will get back to you.</p>
+        <p class="contact-person">{contact.person.name} <span>{contact.person.role}</span></p>
+      </div>
+      <ContactList includeHours />
+      <div class="form-surface">
+        <h3>Send a message</h3>
+        <CallbackForm id="home-callback" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="news-title" data-reveal>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">News Publications</p>
+          <h2 id="news-title" class="h-section">Our latest news</h2>
+        </div>
+        <a class="arrow-link" href="/news-publications">View all posts <Icon name="arrow-right" /></a>
+      </div>
+      <div class="grid grid--3 news-home">
+        {homePosts.map((p) => <PostCard post={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="t-title" data-reveal>
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Testimonials &amp; clients</p>
+          <h2 id="t-title" class="h-section">What our clients say</h2>
+        </div>
+        <a class="arrow-link" href="/client-testimonies">All testimonials <Icon name="arrow-right" /></a>
+      </div>
+      <div data-scroller>
+        <div class="t-scroller t-scroller--4" data-scroller-track>
+          {testimonials.map((t) => <TestimonialCard t={t} excerpt={220} />)}
+        </div>
+        <div class="t-nav">
+          <button class="ctrl" type="button" data-scroller-prev aria-label="Previous testimonials">
+            <Icon name="arrow-left" />
+          </button>
+          <button class="ctrl" type="button" data-scroller-next aria-label="Next testimonials">
+            <Icon name="arrow-right" />
+          </button>
+        </div>
+      </div>
+      <div class="client-marquee" aria-label="Clients">
+        <ClientMarquee />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { initIntro } from '../scripts/intro';
+  import { initScroller } from '../scripts/scroller';
+  initIntro();
+  initScroller();
+</script>

@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import { clients } from '../data/site';
+
+const logoAlt = (name: string) => (name === 'Client logo' ? '' : name);
+---
+
+<div class="marquee">
+  <ul class="marquee-track">
+    {
+      clients.map((c) => (
+        <li>
+          <Image src={c.logo} alt={logoAlt(c.name)} height={96} loading="lazy" />
+        </li>
+      ))
+    }
+    {
+      clients.map((c) => (
+        <li aria-hidden="true">
+          <Image src={c.logo} alt="" height={96} loading="lazy" />
+        </li>
+      ))
+    }
+  </ul>
+</div>

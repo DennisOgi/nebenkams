@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+---
+
+<Base title="Careers" description="Current job listings at Nebenkams Global Ltd.">
+  <PageHead title="Job Listings" crumbs={[{ label: 'About Us', href: '/about-us' }]} />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="empty-state">
+        <p class="eyebrow">Careers</p>
+        <h2>We are not hiring</h2>
+        <p>No job listing is published on the current site. If you would like to get in touch, send us a message.</p>
+        <p style="margin-bottom:0"><a class="btn btn--primary" href="/contact-us">Contact us</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

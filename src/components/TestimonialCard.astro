@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import type { Testimonial } from '../data/site';
+interface Props {
+  t: Testimonial;
+  excerpt?: number;
+}
+const { t, excerpt } = Astro.props;
+const cut = (text: string, max: number) => {
+  if (text.length <= max) return text;
+  const slice = text.slice(0, max);
+  return slice.slice(0, slice.lastIndexOf(' ')).replace(/[,;:.]$/, '') + '…';
+};
+const quote = excerpt ? cut(t.quote, excerpt) : t.quote;
+const truncated = quote !== t.quote;
+---
+
+<figure class="t-card">
+  <blockquote>
+    <p style="margin:0">{quote}</p>
+  </blockquote>
+  {
+    truncated && (
+      <a class="arrow-link" href="/client-testimonies">
+        Read full testimonial<span class="sr-only"> from {t.name}</span>
+      </a>
+    )
+  }
+  <figcaption>
+    <Image src={t.logo} alt={t.logoAlt} height={88} loading="lazy" />
+    <span>
+      <span class="who-name">{t.name}</span>
+      <span class="who-role">{[t.role, t.company].filter(Boolean).join(', ')}</span>
+    </span>
+  </figcaption>
+</figure>

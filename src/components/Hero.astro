@@ -1,0 +1,126 @@
+---
+import { getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import { findService, hero, heroOpenId, heroSlides, serviceHref } from '../data/site';
+
+const lanes = [
+  { label: 'Transport', href: '/service/truck-cover-production' },
+  { label: 'Outdoor spaces', href: '/service/marquee-tents-production' },
+  { label: 'Agriculture', href: '/service/green-house-farm-and-fishponds' },
+  { label: 'Covers & materials', href: '/service/tarpaulin-accessories' },
+];
+
+const prepared = await Promise.all(
+  heroSlides.map(async (slide, i) => {
+    const service = findService(slide.serviceSlug);
+    if (!service) throw new Error(`Missing service for hero slide ${slide.id}`);
+    const desktop = await getImage({ src: slide.image, width: 2000, format: 'webp', quality: 76 });
+    const mobile = await getImage({ src: slide.imageMobile, width: 1200, format: 'webp', quality: 74 });
+    return { ...slide, service, desktop, mobile, open: slide.id === heroOpenId };
+  }),
+);
+---
+
+<section class="hero" data-carousel aria-roledescription="carousel" aria-label="Featured work">
+  <div class="hero-visual">
+    <div class="stage" data-stage>
+      {
+        prepared.map((slide, i) => (
+          <figure
+            class:list={['slide', { 'is-active': slide.open }]}
+            data-slide
+            data-label={`${slide.selector}: ${slide.service.name}`}
+          >
+            <picture>
+              <source media="(max-width: 767px)" srcset={slide.mobile.src} width={slide.mobile.attributes.width} height={slide.mobile.attributes.height} />
+              <img
+                src={slide.desktop.src}
+                srcset={slide.desktop.srcSet.attribute}
+                sizes="(min-width: 960px) 62vw, 100vw"
+                alt={slide.imageAlt}
+                width={slide.desktop.attributes.width}
+                height={slide.desktop.attributes.height}
+                style={`--pos: ${slide.objectPosition}`}
+                loading={slide.open ? 'eager' : 'lazy'}
+                fetchpriority={slide.open ? 'high' : 'low'}
+                decoding={slide.open ? 'sync' : 'async'}
+              />
+            </picture>
+          </figure>
+        ))
+      }
+    </div>
+    <div class="hero-stage-ui">
+      <div class="hero-progress" aria-hidden="true"><span data-progress></span></div>
+      <div class="hero-caption" aria-live="off">
+        {
+          prepared.map((slide, i) => (
+            <div class:list={['caption-item', { 'is-active': slide.open }]} data-caption>
+              <span class="svc">{slide.service.name}</span>
+              <a class="arrow-link" href={serviceHref(slide.service)} tabindex={slide.open ? 0 : -1}>
+                View service <Icon name="arrow-right" />
+              </a>
+            </div>
+          ))
+        }
+      </div>
+      <div class="hero-controls">
+        <button class="ctrl" type="button" data-prev aria-label="Previous slide"><Icon name="arrow-left" /></button>
+        <div class="selectors" role="group" aria-label="Choose a slide">
+          {
+            prepared.map((slide, i) => (
+              <button
+                class="ctrl selector"
+                type="button"
+                data-select
+                aria-label={`Show ${slide.selector} slide: ${slide.service.name}`}
+                aria-current={slide.open ? 'true' : undefined}
+              >
+                {slide.number} <span class="lbl">{slide.selector}</span>
+              </button>
+            ))
+          }
+        </div>
+        <button class="ctrl ctrl-play" type="button" data-play aria-pressed="true" aria-label="Pause slideshow">
+          <span data-icon-play hidden><Icon name="play" /></span>
+          <span data-icon-pause><Icon name="pause" /></span>
+          <span class="sr-only" data-play-label>Pause</span>
+        </button>
+        <button class="ctrl" type="button" data-next aria-label="Next slide"><Icon name="arrow-right" /></button>
+      </div>
+      <p class="sr-only" data-carousel-live aria-live="polite"></p>
+    </div>
+  </div>
+
+  <div class="hero-copy">
+    <div class="hero-panel">
+      <p class="eyebrow">{hero.eyebrow}</p>
+      <h1>
+        {hero.heading.map((line) => (
+          <span>{line}</span>
+        ))}
+      </h1>
+      <p class="lede">{hero.intro}</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="/our-services">Explore solutions <Icon name="arrow-right" /></a>
+        <a class="btn btn--quiet" href="/past-projects">View our work <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="cover-lanes" aria-label="Cover types">
+    {
+      lanes.map((lane) => (
+        <a href={lane.href}>
+          {lane.label}
+          <Icon name="arrow-right" />
+        </a>
+      ))
+    }
+  </nav>
+</section>
+
+<script>
+  import { initCarousel } from '../scripts/carousel';
+  initCarousel();
+</script>

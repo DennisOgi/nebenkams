@@ -1,0 +1,72 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import SubscribeForm from './SubscribeForm.astro';
+import { company, contact, footerCompany, services, serviceHref } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer on-dark">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo-plate" href="/" aria-label="Nebenkams home"><Logo loading="lazy" /></a>
+        <p>{company.intro}</p>
+        <a class="arrow-link" href="/about-us">Read More <span class="sr-only">about Nebenkams</span><Icon name="arrow-right" /></a>
+        <ul class="socials-row" aria-label="Social accounts">
+          {
+            contact.socials.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} (opens in a new tab)`}>
+                  <Icon name={s.icon} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="f-heading">Services</h2>
+        <h2 class="f-mobile-h" style="margin:0">
+          <button class="f-toggle" type="button" data-f-toggle aria-controls="f-services" aria-expanded="true">
+            Services <Icon name="chevron-down" />
+          </button>
+        </h2>
+        <ul class="f-panel" id="f-services">
+          {services.map((s) => <li><a href={serviceHref(s)}>{s.name}</a></li>)}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="f-heading">Company</h2>
+        <h2 class="f-mobile-h" style="margin:0">
+          <button class="f-toggle" type="button" data-f-toggle aria-controls="f-company" aria-expanded="true">
+            Company <Icon name="chevron-down" />
+          </button>
+        </h2>
+        <ul class="f-panel" id="f-company">
+          {footerCompany.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div class="footer-col subscribe">
+        <h2>Subscribe</h2>
+        <SubscribeForm />
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p style="margin:0">
+        © {year} Nebenkams by <a href={company.poweredBy.href} target="_blank" rel="noopener noreferrer">{company.poweredBy.name}</a>
+      </p>
+      <a class="to-top" href="#top">Back to top <Icon name="arrow-right" /></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  @media (min-width: 768px) {
+    .f-mobile-h { display: none; }
+  }
+</style>

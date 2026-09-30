@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { projectHref, type Project } from '../data/site';
+interface Props {
+  project: Project;
+  headingLevel?: 'h2' | 'h3';
+  sizes?: string;
+  eager?: boolean;
+}
+const { project, headingLevel = 'h3', sizes = '(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 100vw', eager = false } = Astro.props;
+const H = headingLevel;
+---
+
+<article class="card">
+  <div class="card-media">
+    <Image src={project.image} alt={project.imageAlt} widths={[480, 800, 1200]} sizes={sizes} loading={eager ? 'eager' : 'lazy'} />
+  </div>
+  <div class="card-body">
+    <H class="h-card"><a class="card-title-link" href={projectHref(project)}>{project.title}</a></H>
+    {
+      project.client && (
+        <p class="client-line" style="margin:0">
+          {project.clientLogo && <Image src={project.clientLogo} alt="" height={56} loading="lazy" />}
+          <span>{project.client}</span>
+        </p>
+      )
+    }
+    <span class="more" aria-hidden="true">View project <Icon name="arrow-right" /></span>
+  </div>
+</article>

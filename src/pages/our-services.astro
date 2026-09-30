@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
+import { serviceHref, services } from '../data/site';
+---
+
+<Base title="Our Services" description="Truck covers, marquee tents, canopies, greenhouse and fishpond tarpaulin, accessories and car covers from Nebenkams.">
+  <PageHead title="Our Services" />
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="grid grid--services">
+        {
+          services.map((s) => (
+            <li>
+              <article class="card">
+                <div class="card-media">
+                  <Image src={s.image} alt={s.imageAlt} widths={[480, 800]} sizes="(min-width: 1200px) 25vw, (min-width: 640px) 50vw, 100vw" loading="lazy" />
+                </div>
+                <div class="card-body">
+                  <h2 class="h-card">
+                    <a class="card-title-link" href={serviceHref(s)}>
+                      {s.name}
+                    </a>
+                  </h2>
+                  <p class="muted" style="margin:0">{s.excerpt}</p>
+                  <span class="more" aria-hidden="true">
+                    Read more <Icon name="arrow-right" />
+                  </span>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

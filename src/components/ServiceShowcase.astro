@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { serviceHref, services } from '../data/site';
+---
+
+<div class="showcase" data-showcase>
+  <div class="showcase-media" aria-hidden="true">
+    {
+      services.map((s, i) => (
+        <Image
+          src={s.image}
+          alt=""
+          class:list={{ 'is-shown': i === 0 }}
+          data-svc-image
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1024px) 55vw, 100vw"
+          loading={i === 0 ? 'eager' : 'lazy'}
+        />
+      ))
+    }
+  </div>
+  <ul class="svc-list">
+    {
+      services.map((s, i) => (
+        <li class="svc-row" data-svc-row>
+          <h3>
+            <button
+              class="svc-toggle"
+              type="button"
+              aria-expanded={i === 0 ? 'true' : 'false'}
+              aria-controls={`svc-panel-${s.slug}`}
+              id={`svc-btn-${s.slug}`}
+            >
+              <span class="svc-name">{s.name}</span>
+              <Icon name="chevron-down" />
+            </button>
+          </h3>
+          <div class="svc-panel" id={`svc-panel-${s.slug}`} role="region" aria-labelledby={`svc-btn-${s.slug}`} hidden={i !== 0}>
+            <Image src={s.image} alt={s.imageAlt} widths={[640, 960]} sizes="100vw" loading="lazy" />
+            <p>{s.excerpt}</p>
+            <a class="arrow-link" href={serviceHref(s)}>
+              View service <span class="sr-only">{s.name}</span>
+              <Icon name="arrow-right" />
+            </a>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  import { initShowcase } from '../scripts/showcase';
+  initShowcase();
+</script>

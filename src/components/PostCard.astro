@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { categoryName, formatDate, postHref, type Post } from '../data/site';
+interface Props {
+  post: Post;
+  headingLevel?: 'h2' | 'h3';
+}
+const { post, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+---
+
+<article class="card">
+  <div class="card-media">
+    {
+      post.image ? (
+        <Image src={post.image} alt={post.imageAlt ?? ''} widths={[480, 800]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw" loading="lazy" />
+      ) : (
+        <div class="img-placeholder" aria-hidden="true">
+          <Icon name="image" />
+        </div>
+      )
+    }
+  </div>
+  <div class="card-body">
+    <p class="meta" style="margin:0">
+      <time datetime={post.date}>{formatDate(post.date)}</time>
+      <span>{categoryName(post.category)}</span>
+    </p>
+    <H class="h-card"><a class="card-title-link" href={postHref(post)}>{post.title}</a></H>
+    <span class="more" aria-hidden="true">Read more <Icon name="arrow-right" /></span>
+  </div>
+</article>
