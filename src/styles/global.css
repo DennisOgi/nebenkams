@@ -325,15 +325,12 @@ html.menu-open { overflow: hidden; }
 }
 .ctrl svg { width: 18px; height: 18px; flex: none; }
 .ctrl:hover { background: rgba(255, 255, 255, 0.14); }
-.selectors { display: flex; flex: 1; justify-content: center; flex-wrap: wrap; gap: 0; }
-.selector { position: relative; }
-.selector .lbl { display: none; }
-.selector::after { content: ''; position: absolute; left: 8px; right: 8px; bottom: 4px; height: 2px; background: transparent; }
-.selector[aria-current='true']::after { background: var(--orange); }
-@media (min-width: 768px) {
-  .selector .lbl { display: inline; }
-  .selectors { flex-wrap: nowrap; gap: 2px; }
+.selectors { display: flex; flex: 1; justify-content: center; flex-wrap: nowrap; gap: 2px; }
+.selector { position: relative; min-width: 28px; padding-inline: 6px; }
+.selector::before {
+  content: ''; width: 7px; height: 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.55);
 }
+.selector[aria-current='true']::before { width: 18px; background: var(--orange); }
 @media (min-width: 960px) {
   .hero {
     grid-template-columns:

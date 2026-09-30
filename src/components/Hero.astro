@@ -77,7 +77,7 @@ const prepared = await Promise.all(
                 aria-label={`Show ${slide.selector} slide: ${slide.service.name}`}
                 aria-current={slide.open ? 'true' : undefined}
               >
-                {slide.number} <span class="lbl">{slide.selector}</span>
+                <span class="sr-only">{slide.number} {slide.selector}</span>
               </button>
             ))
           }
